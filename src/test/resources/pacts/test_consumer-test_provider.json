@@ -1,0 +1,78 @@
+{
+  "provider": {
+    "name": "test_provider"
+  },
+  "consumer": {
+    "name": "test_consumer"
+  },
+  "interactions": [
+    {
+      "description": "GET request",
+      "request": {
+        "method": "GET",
+        "path": "/api/userdetails/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "title": "Mr",
+          "firstName": "Jacob",
+          "lastName": "Odsinada",
+          "gender": "Male",
+          "address": {
+            "street": "12345 Google Street",
+            "city": "Sydney",
+            "state": "NSW",
+            "postCode": 2061
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "test GET user details"
+        }
+      ]
+    },
+    {
+      "description": "PUT REQUEST",
+      "request": {
+        "method": "PUT",
+        "path": "/api/userdetails/1",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "title": "Mrs",
+          "firstName": "Kulafu",
+          "lastName": "Kenzoflu",
+          "gender": "Female",
+          "address": {
+            "street": "91 Google Street",
+            "city": "Alexandria",
+            "state": "VIC",
+            "postCode": 2067
+          }
+        }
+      },
+      "response": {
+        "status": 204
+      },
+      "providerStates": [
+        {
+          "name": "test PUT user details"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.11"
+    }
+  }
+}
