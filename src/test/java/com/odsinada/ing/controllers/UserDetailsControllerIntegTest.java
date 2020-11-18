@@ -39,7 +39,8 @@ public class UserDetailsControllerIntegTest {
     public void shouldGetUserDetails(){
         // arrange
         RequestSpecification request = given()
-                .contentType("application/json");
+                .contentType("application/json")
+                .auth().basic("user", "userpwd");
 
         // act
         Response response = request.get("/1");
@@ -50,7 +51,7 @@ public class UserDetailsControllerIntegTest {
 
     @Test
     @Sql({"/test-schema.sql", "/test-data.sql"})
-    public void shouldUpdatetUserDetails() throws JSONException {
+    public void shouldUpdateUserDetails() throws JSONException {
         // arrange
         UserDetails original = userDetailsRepository.findById(1).get();
         UserDetails expectedOriginal = UserDetails.builder()
@@ -100,6 +101,7 @@ public class UserDetailsControllerIntegTest {
 
         RequestSpecification request = given()
                 .contentType("application/json")
+                .auth().basic("admin", "adminpwd")
                 .body(requestParams.toString());
 
         // act
@@ -110,4 +112,21 @@ public class UserDetailsControllerIntegTest {
         UserDetails updated = userDetailsRepository.findById(1).get();
         assertThat(updated).isEqualTo(expectedUpdated);
     }
+
+    @Test
+    @Sql({"/test-schema.sql", "/test-data.sql"})
+    public void shouldDenyUpdatingUserDetailsForNonAdminUser() throws JSONException {
+        // arrange
+        RequestSpecification request = given()
+                .contentType("application/json")
+                .auth().basic("user", "userpwd");
+
+        // act
+        Response response = request.put("/1");
+
+        // assert
+        assertThat(response.getStatusCode()).isEqualTo(403);
+    }
+
+
 }

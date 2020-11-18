@@ -69,6 +69,7 @@ public class UserDetailsControllerTest {
         assertThat(thrown).isInstanceOf(ResponseStatusException.class);
         ResponseStatusException exc = (ResponseStatusException) thrown;
         assertThat(exc.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(exc.getReason()).isEqualTo("User id should be numeric");
     }
 
     @Test

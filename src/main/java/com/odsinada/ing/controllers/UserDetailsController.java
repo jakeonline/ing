@@ -26,7 +26,7 @@ public class UserDetailsController {
         try {
             id = Long.valueOf(idPathVar);
         } catch (NumberFormatException nfexc) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User id should be numeric", nfexc);
         }
         Optional<UserDetails> userDetails = userDetailsRepository.findById(id);
 
